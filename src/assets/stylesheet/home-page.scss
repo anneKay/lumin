@@ -1,0 +1,15 @@
+@import "./shared/colors.scss";
+
+.expandedHomeWrapper {
+  pointer-events: none;
+  position: fixed;
+  .header-container, .main-title {
+    background-color: #c7cbcb;
+  }
+  .header-container {
+    border-bottom: 1px solid #acb1b1;
+  }
+  .products-body {
+    background-color: #a5a8a8;
+  }
+}
