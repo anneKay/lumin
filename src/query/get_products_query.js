@@ -1,12 +1,12 @@
 import { gql } from "apollo-boost";
 
 export default gql`
-  query GetProducts {
+  query GetProducts($currency: Currency!) {
     products {
       id
       title
       image_url
-      price(currency: USD)
+      price (currency: $currency)
     }
   }
 `;

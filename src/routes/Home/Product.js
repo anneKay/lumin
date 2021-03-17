@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useState, useContext } from 'react';
 import { useQuery } from 'react-apollo';
 import GET_PRODUCTS from "../../query/get_products_query";
 import CartContext from "../../provider/cart/CartContext";
+import { updateCart } from "../../utils/helper";
 import "../../assets/stylesheet/product.scss";
 
 const Image = lazy(() => import("./Image"));
@@ -11,6 +12,9 @@ const GetProducts = ({ sideBarVisible, setSideBarVisible }) => {
   const { setCart } = useContext(CartContext);
 
   // const { loading, error, data } = useQuery(GET_PRODUCTS);
+  // const { loading, error, data } = useQuery(GET_PRODUCTS, {
+  //   variables: { currency: "USD" },
+  // });
   // if (loading) return 'Loading...';
   // if (error) return `Error! ${error.message}`;
 
@@ -150,9 +154,9 @@ const GetProducts = ({ sideBarVisible, setSideBarVisible }) => {
     }
   ]
 
-  const handleClick = (product) => {
+  const handleClick = (event, product) => {
     setSideBarVisible(!sideBarVisible);
-    setCart(cartList => [...cartList, product])
+    setCart(cartList => updateCart(cartList, product))
   }
   return (
     <div className="products-body">
@@ -163,7 +167,7 @@ const GetProducts = ({ sideBarVisible, setSideBarVisible }) => {
           </Suspense>
           <h2>{product.title}</h2>
           <h2>{`From $${product.price}.00`}</h2>
-          <button onClick={() => handleClick(product)} className="product-cta">Add to Cart</button>
+          <button onClick={(event) => handleClick(event, product)} className="product-cta">Add to Cart</button>
         </div>
       ))}
     </div>

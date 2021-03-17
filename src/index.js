@@ -10,7 +10,7 @@ ReactDOM.render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <Home />
-    </ApolloProvider>
+    </ApolloProvider>,
   </React.StrictMode>,
   document.getElementById('root')
 );
