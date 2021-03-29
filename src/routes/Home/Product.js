@@ -1,9 +1,9 @@
-import React, { lazy, Suspense, useEffect, useState, useContext } from 'react';
+import React, { lazy, Suspense, useEffect, useContext } from 'react';
 import { useQuery } from 'react-apollo';
 import GET_PRODUCTS from "../../query/get_products_query";
 import CartContext from "../../provider/cart/CartContext";
 import ProductContext from "../../provider/product/ProductContext";
-import { updateCart } from "../../utils/helper";
+import { updateCart, getSymbol } from "../../utils/helper";
 import "../../assets/stylesheet/product.scss";
 
 const Image = lazy(() => import("./Image"));
@@ -21,17 +21,16 @@ const GetProducts = ({ sideBarVisible, setSideBarVisible }) => {
     if (data) {
       setProducts({...products, data: data.products, currency: 'USD'})
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[data])
+
+  const handleClick = (product) => {
+    setSideBarVisible(!sideBarVisible);
+    const cartProducts = updateCart(cart.data || [], product);
+    setCart({...cart, data: cartProducts, currency: products.currency})
+  }
 
   if (loading) return 'Loading...';
   if (error) return `Error! ${error.message}`;
-
-  const handleClick = (event, product) => {
-    setSideBarVisible(!sideBarVisible);
-    const newCart = updateCart(cart, product);
-    setCart(cartList => updateCart(cartList, product))
-  }
 
   return (
     <div className="products-body">
@@ -41,8 +40,8 @@ const GetProducts = ({ sideBarVisible, setSideBarVisible }) => {
             <Image src={product.image_url} />
           </Suspense>
           <h2>{product.title}</h2>
-          <h2>{`From ${products.currency === "USD" ? "$" : products.currency}${product.price}.00`}</h2>
-          <button onClick={(event) => handleClick(event, product)} className="product-cta">Add to Cart</button>
+          <h2>{`From ${getSymbol(products.currency)}${product.price}.00`}</h2>
+          <button onClick={() => handleClick(product)} className="product-cta">Add to Cart</button>
         </div>
       ))}
     </div>

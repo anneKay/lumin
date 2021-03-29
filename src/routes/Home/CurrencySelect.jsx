@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useQuery } from 'react-apollo';
 import GET_CURRENCY from "../../query/get_currency";
 
 
-const CurrencyOptions = ({currency, setCurrency}) => {
+const CurrencyOptions = ({setCurrency}) => {
 
   const { loading, error, data } = useQuery(GET_CURRENCY);
 

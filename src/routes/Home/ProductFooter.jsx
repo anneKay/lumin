@@ -1,15 +1,13 @@
 import React, { useContext } from "react";
-import { updateCart } from "../../utils/helper";
+import { updateCart, getSymbol } from "../../utils/helper";
 import CartContext from "../../provider/cart/CartContext";
 
-const ProductFooter = ({ product, currency, loading }) => {
+const ProductFooter = ({ product, loading }) => {
 
-  const { setCart } = useContext(CartContext);
+  const { cart, setCart } = useContext(CartContext);
 
   function handleClick(product, action) {
-    setCart(cartList => {
-      return updateCart(cartList, product, action)
-    })
+    setCart({...cart, data: updateCart(cart.data || [], product, action)});
   }
 
   return (
@@ -19,8 +17,7 @@ const ProductFooter = ({ product, currency, loading }) => {
         <p>{product.count}</p>
         <span onClick={() => handleClick(product, "increment")} className="plus">&#43;</span>
       </div>
-      {!loading && <p className="price">{`${currency === 'USD' ? '$' : currency}${product.price}`}</p>}
-      
+      {!loading && <p className="price">{`${getSymbol(cart.currency)}${product.price}.00`}</p>}
     </div>
   )
 }

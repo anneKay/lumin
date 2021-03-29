@@ -18,10 +18,14 @@ export const updateCart = (cartList, product, action) => {
   }
   if (action === "decrement") {
     return [
-      ...cartList.slice(0, indexOfProduct), decrementProduct, ...cartList.slice(indexOfProduct + 1)
+      ...cartList.slice(0, indexOfProduct), 
+      decrementProduct, ...cartList.slice(indexOfProduct + 1)
       ]
   }
-  return [...cartList.slice(0, indexOfProduct), incrementProduct, ...cartList.slice(indexOfProduct + 1)]
+  return [
+    ...cartList.slice(0, indexOfProduct), 
+    incrementProduct, ...cartList.slice(indexOfProduct + 1)
+  ]
 }
 
 
@@ -34,7 +38,6 @@ export const updateCart = (cartList, product, action) => {
   if (products.length > 0 && cart.length > 0) {
     let cartObject = {};
     cart.map(item => cartObject[item.id] = item);
-    // const currencySymbol = currency === "USD" ? '$' : currency;
     products.map(product => 
       (product.id in cartObject) && 
       (cartObject[product.id].price = product.price));
@@ -43,3 +46,9 @@ export const updateCart = (cartList, product, action) => {
     return cart;
   }
 }
+
+/**
+ * @description returns the right symbol for currency
+ * @param {String} currency the selected currency
+ */
+  export const getSymbol = (currency) => currency === "USD" ? "$" : currency

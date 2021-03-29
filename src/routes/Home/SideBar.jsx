@@ -26,15 +26,14 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
   const handleChange = async (event) => {
     if (event.target && event.target.value) {
       await getProducts({ variables: { currency: event.target.value } });
-      console.log(error, 'Pppppppppppp')
       setCurrency(event.target.value);
     }
   }
   useEffect(() => {
     (async () => {
       if (data) {
-        const newCart = updatePrice([...cart], data.products)
-        setCart([...cart], newCart);
+        const newCart = updatePrice([...cart.data], data.products)
+        setCart({...cart, data: newCart, currency,})
         setProducts({...products, currency: currency, data: data.products});
       }
     })()
@@ -42,6 +41,7 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
 
   return (
     <section className={classNames('sideBar', { openSideBar: sideBarVisible })}>
+      {console.log(cart, 'checking for new bugs')}
       <span className="closeSideContainer">
         <div onClick={() => setSideBarVisible(!sideBarVisible)}>
           <span className="left"></span>
@@ -57,9 +57,9 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
         </option>
       ))}
     </select>
-      {cart.length > 0 && cart.map((product) => (
+    {error && <p className="error">Unable to update price at this time</p>}
+      {Object.keys(cart).length > 0 && cart.data.map((product) => (
       <>
-        {error && <p className="error">Unable to update price at this time</p>}
         <div key={`id---${product.id}`} className="product-details">
           <span className="close-button">&times;</span>
           <p className="product-name">{product.title}</p>
