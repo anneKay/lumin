@@ -1,6 +1,7 @@
 import React from "react";
 import { useQuery } from 'react-apollo';
 import GET_CURRENCY from "../../query/get_currency";
+import PropTypes from 'prop-types';
 
 
 const CurrencyOptions = ({setCurrency}) => {
@@ -22,5 +23,9 @@ const CurrencyOptions = ({setCurrency}) => {
     </select>
   )
 }
+
+CurrencyOptions.propTypes = {
+  setCurrency: PropTypes.func.isRequired,
+};
 
 export default CurrencyOptions;

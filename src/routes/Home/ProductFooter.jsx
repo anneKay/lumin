@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import PropTypes from "prop-types";
 import { updateCart, getSymbol } from "../../utils/helper";
 import CartContext from "../../provider/cart/CartContext";
 
@@ -21,5 +22,11 @@ const ProductFooter = ({ product, loading }) => {
     </div>
   )
 }
+
+ProductFooter.propTypes = {
+  product: PropTypes.object,
+  loading: PropTypes.bool,
+};
+
 
 export default ProductFooter;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { getSymbol } from "../../utils/helper";
 import "../../assets/stylesheet/side-bar-footer.scss";
 
@@ -17,6 +18,10 @@ const SideBarFooter = ({cart}) => {
     <div className="checkout-cta">PROCEED TO CHECKOUT</div>
     </div>
   );
+};
+
+SideBarFooter.propTypes = {
+  cart: PropTypes.object,
 };
 
 export default SideBarFooter;

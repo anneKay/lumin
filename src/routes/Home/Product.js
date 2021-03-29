@@ -1,6 +1,7 @@
 import React, { lazy, Suspense, useEffect, useContext } from 'react';
 import { useQuery } from 'react-apollo';
 import GET_PRODUCTS from "../../query/get_products_query";
+import PropTypes from "prop-types";
 import CartContext from "../../provider/cart/CartContext";
 import ProductContext from "../../provider/product/ProductContext";
 import { updateCart, getSymbol } from "../../utils/helper";
@@ -47,5 +48,10 @@ const GetProducts = ({ sideBarVisible, setSideBarVisible }) => {
     </div>
   );
 }
+
+GetProducts.propTypes = {
+  sideBarVisible: PropTypes.bool,
+  setSideBarVisible: PropTypes.func
+};
 
 export default GetProducts;

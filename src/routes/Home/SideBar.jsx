@@ -1,20 +1,21 @@
 import React, { useState, useEffect, lazy, Suspense, useContext } from 'react';
 import classNames from 'classnames';
 import { useQuery, useLazyQuery } from 'react-apollo';
+import PropTypes from "prop-types";
 import GET_PRODUCTS from "../../query/get_products_query";
 import CartContext from "../../provider/cart/CartContext";
 import ProductContext from "../../provider/product/ProductContext";
 import GET_CURRENCY from "../../query/get_currency";
 import ProductFooter from "./ProductFooter";
 import SideBarFooter from "./SideBarFooter";
-import { updatePrice } from "../../utils/helper";
+import { updatePrice, saveCart } from "../../utils/helper";
 import "../../assets/stylesheet/side-bar.scss";
 
 const Image = lazy(() => import("./Image"));
 
 const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
 
-  const [currency, setCurrency] = useState('USD');
+  const [currency, setCurrency] = useState('');
   const currencyResponse = useQuery(GET_CURRENCY);
 
   let currencies = [];
@@ -22,6 +23,7 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
   const { cart, setCart } = useContext(CartContext);
   const { setProducts, products } = useContext(ProductContext);
   const [getProducts, { loading, data, error }] = useLazyQuery(GET_PRODUCTS);
+  saveCart(cart);
 
   const handleChange = async (event) => {
     if (event.target && event.target.value) {
@@ -36,12 +38,12 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
         setCart({...cart, data: newCart, currency,})
         setProducts({...products, currency: currency, data: data.products});
       }
+      saveCart(cart);
     })()
-  },[data])
+  },[data, currency])
 
   return (
     <section className={classNames('sideBar', { openSideBar: sideBarVisible })}>
-      {console.log(cart, 'checking for new bugs')}
       <span className="closeSideContainer">
         <div onClick={() => setSideBarVisible(!sideBarVisible)}>
           <span className="left"></span>
@@ -66,13 +68,19 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
           <Suspense fallback="Loading ...">
             <Image src={product.image_url} />
           </Suspense>
-          <ProductFooter loading={loading} product={product} />
+          <ProductFooter loading={loading} currency={currency} product={product} />
         </div>
-        <SideBarFooter cart={cart} />
+        <SideBarFooter currency={currency} cart={cart} />
       </>
       ))}
     </section>
   );
+};
+
+
+SideBar.propTypes = {
+  setSideBarVisible: PropTypes.func.isRequired,
+  sideBarVisible: PropTypes.bool.isRequired,
 };
 
 export default SideBar;

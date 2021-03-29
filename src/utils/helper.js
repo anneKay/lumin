@@ -51,4 +51,25 @@ export const updateCart = (cartList, product, action) => {
  * @description returns the right symbol for currency
  * @param {String} currency the selected currency
  */
-  export const getSymbol = (currency) => currency === "USD" ? "$" : currency
+  export const getSymbol = (currency) => {
+    return currency === "USD" ? "$" : currency
+  }
+
+/**
+ * @description Saves a copy of the user's cart to the browser's localStorage
+ * @param {object} cart the cart object
+ */
+export const saveCart = (cart) => {
+  const serializedCart = JSON.stringify(cart);
+  window.localStorage.setItem('cart', serializedCart);
+};
+
+/**
+ * @description Loads the cart from localStorage.
+ * Returns undefined if no cart is found.
+ */
+ export const loadCart = () => {
+  const serializedCart = window.localStorage.getItem('cart');
+  return JSON.parse(serializedCart);
+
+};

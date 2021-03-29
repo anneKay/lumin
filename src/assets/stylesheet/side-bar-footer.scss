@@ -14,6 +14,7 @@
   .total{
     display: grid;
     grid-template-columns: auto auto;
+    width: 470px;
     p { 
       justify-self: end;
       padding-right: 5px;
@@ -27,5 +28,6 @@
     font-size: 12px;
     height: 30px;
     margin-bottom: 20px;
+    width: 460px;
   }
 }
