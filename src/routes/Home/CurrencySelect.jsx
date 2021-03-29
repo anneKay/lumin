@@ -5,7 +5,6 @@ import GET_CURRENCY from "../../query/get_currency";
 
 const CurrencyOptions = ({currency, setCurrency}) => {
 
-
   const { loading, error, data } = useQuery(GET_CURRENCY);
 
   let currencies = [];

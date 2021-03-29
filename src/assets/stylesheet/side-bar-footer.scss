@@ -1,0 +1,31 @@
+@import "../stylesheet/shared/colors.scss";
+
+.FooterContainer {
+  bottom: 0;
+  top: auto;
+  position: fixed;
+  width: 50%;
+  hr {
+    border: none;
+    background-color: $dark-grey;
+    color: $dark-grey;
+    height: 1px;
+  }
+  .total{
+    display: grid;
+    grid-template-columns: auto auto;
+    p { 
+      justify-self: end;
+      padding-right: 5px;
+    }
+  }
+  .checkout-cta {
+    background-color: $dark-grey;
+    text-align: center;
+    color: $white;
+    padding-top: 15px;
+    font-size: 12px;
+    height: 30px;
+    margin-bottom: 20px;
+  }
+}

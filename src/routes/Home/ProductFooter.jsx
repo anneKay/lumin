@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { updateCart } from "../../utils/helper";
 import CartContext from "../../provider/cart/CartContext";
 
-const ProductFooter = ({product}) => {
+const ProductFooter = ({ product, currency, loading }) => {
 
   const { setCart } = useContext(CartContext);
 
@@ -12,7 +12,6 @@ const ProductFooter = ({product}) => {
     })
   }
 
-
   return (
     <div className="product-footer">
       <div className="product-quantity">
@@ -20,7 +19,8 @@ const ProductFooter = ({product}) => {
         <p>{product.count}</p>
         <span onClick={() => handleClick(product, "increment")} className="plus">&#43;</span>
       </div>
-      <p className="price">{`$${product.price}.00`}</p>
+      {!loading && <p className="price">{`${currency === 'USD' ? '$' : currency}${product.price}`}</p>}
+      
     </div>
   )
 }

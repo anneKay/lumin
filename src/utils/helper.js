@@ -23,3 +23,23 @@ export const updateCart = (cartList, product, action) => {
   }
   return [...cartList.slice(0, indexOfProduct), incrementProduct, ...cartList.slice(indexOfProduct + 1)]
 }
+
+
+/**
+ * @description updates price of product in cart 
+ * @param {Array} cart the list of products in the cart 
+ * @param {Array} product the updated product with new price
+ */
+ export const updatePrice = (cart, products) => {
+  if (products.length > 0 && cart.length > 0) {
+    let cartObject = {};
+    cart.map(item => cartObject[item.id] = item);
+    // const currencySymbol = currency === "USD" ? '$' : currency;
+    products.map(product => 
+      (product.id in cartObject) && 
+      (cartObject[product.id].price = product.price));
+    return Object.values(cartObject)
+  } else {
+    return cart;
+  }
+}
