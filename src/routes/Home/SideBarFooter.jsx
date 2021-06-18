@@ -16,7 +16,7 @@ const SideBarFooter = ({cart, sideBarVisible, setSideBarVisible}) => {
       <h3>Subtotal</h3>
       <p>{`${getSymbol(cart.currency)}${totalPrice()}.00`}</p>
     </div>
-    <div onClick={() => setSideBarVisible(!sideBarVisible)} className={classNames('checkout-cta', { openSideBar: sideBarVisible })}>PROCEED TO CHECKOUT</div>
+    <button onClick={() => setSideBarVisible(!sideBarVisible)} className={classNames('checkout-cta', { openSideBar: sideBarVisible })}>PROCEED TO CHECKOUT</button>
     </div>
   );
 };

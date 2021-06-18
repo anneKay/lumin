@@ -7,7 +7,7 @@ const ProductFooter = ({ product, loading }) => {
 
   const { cart, setCart } = useContext(CartContext);
 
-  function handleClick(product, action) {
+  const handleClick = (product, action) => {
     setCart({...cart, data: updateCart(cart.data || [], product, action)});
   }
 

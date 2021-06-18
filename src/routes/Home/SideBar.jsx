@@ -8,6 +8,7 @@ import ProductContext from "../../provider/product/ProductContext";
 import GET_CURRENCY from "../../query/get_currency";
 import ProductFooter from "./ProductFooter";
 import SideBarFooter from "./SideBarFooter";
+import { updateCart } from "../../utils/helper";
 import { updatePrice, saveCart } from "../../utils/helper";
 import "../../assets/stylesheet/side-bar.scss";
 
@@ -19,7 +20,9 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
   const currencyResponse = useQuery(GET_CURRENCY);
 
   let currencies = [];
-  (currencyResponse.loading || currencyResponse.error) ? currencies = [] : currencies = currencyResponse.data.__type.enumValues;
+  (currencyResponse.loading || currencyResponse.error) ? 
+    currencies = [] : 
+    currencies = currencyResponse.data.__type.enumValues;
   const { cart, setCart } = useContext(CartContext);
   const { setProducts, products } = useContext(ProductContext);
   const [getProducts, { loading, data, error }] = useLazyQuery(GET_PRODUCTS);
@@ -31,6 +34,11 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
       setCurrency(event.target.value);
     }
   }
+
+  const handleClick = (product, action) => {
+    setCart({...cart, data: updateCart(cart.data || [], product, action)});
+  }
+
   useEffect(() => {
     (async () => {
       if (data) {
@@ -54,16 +62,16 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
         onChange={event => handleChange(event)}
       >
       {currencies.map((currency, index) => (
-        <option key={index} value={currency.name}>
+        <option key={`${currency}----${index}`} value={currency.name}>
           {currency.name}
         </option>
       ))}
     </select>
     {error && <p className="error">Unable to update price at this time</p>}
-      {Object.keys(cart).length > 0 && cart.data.map((product) => (
-      <>
-        <div key={`id---${product.id}`} className="product-details">
-          <span className="close-button">&times;</span>
+      {Object.keys(cart).length > 0 && cart.data.map((product, index) => (
+      <div className="products-container" key={`${product.id}---${index}`}>
+        <div className="product-details">
+          <span onClick={() => handleClick(product, "remove")} className="close-button">&times;</span>
           <p className="product-name">{product.title}</p>
           <Suspense fallback="Loading ...">
             <Image src={product.image_url} />
@@ -76,7 +84,7 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
           currency={currency} 
           cart={cart} 
         />
-      </>
+      </div>
       ))}
     </section>
   );
