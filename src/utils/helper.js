@@ -13,7 +13,8 @@ export const updateCart = (cartList, product, action) => {
   const selectedProduct = {...cartList[indexOfProduct]}
   const incrementProduct = {...selectedProduct, count: selectedProduct.count + 1};
   const decrementProduct = {...selectedProduct, count: selectedProduct.count - 1};
-  if (selectedProduct.count === 1 && action === "decrement") {
+
+  if ((selectedProduct.count === 1 && action === "decrement") || action === "remove") {
     return cartList.filter((_, i) => i !== indexOfProduct);
   }
   if (action === "decrement") {
