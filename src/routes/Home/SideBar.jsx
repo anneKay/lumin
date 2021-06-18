@@ -48,7 +48,7 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
       }
       saveCart(cart);
     })()
-  },[cart, data, currency])
+  },[cart, data, currency, products, setCart, setProducts])
 
   return (
     <section className={classNames('sideBar', { openSideBar: sideBarVisible })}>
