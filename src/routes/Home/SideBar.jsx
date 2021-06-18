@@ -70,7 +70,12 @@ const SideBar = ({ sideBarVisible, setSideBarVisible }) => {
           </Suspense>
           <ProductFooter loading={loading} currency={currency} product={product} />
         </div>
-        <SideBarFooter currency={currency} cart={cart} />
+        <SideBarFooter 
+          setSideBarVisible={setSideBarVisible} 
+          sideBarVisible={sideBarVisible} 
+          currency={currency} 
+          cart={cart} 
+        />
       </>
       ))}
     </section>

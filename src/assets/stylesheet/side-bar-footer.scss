@@ -29,5 +29,9 @@
     height: 30px;
     margin-bottom: 20px;
     width: 460px;
+    cursor: pointer;
+    &:hover {
+      background-color: #555e5f;
+    }
   }
 }
